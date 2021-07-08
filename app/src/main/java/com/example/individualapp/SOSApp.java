@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class SOSApp extends AppCompatActivity {
@@ -34,16 +35,17 @@ public class SOSApp extends AppCompatActivity {
     public void sendAlert(View view){
         String name = "Kasintha";
         String ImNo = "IM/2017/031";
-        String contactNo = "0783557926";
+        String contactNo = "0716332197";
         stop=false;
 
-        //I’m " + name + " " + ImNo +". Please Help Me. I’m in
 
-        String message = "http://maps.google.com/?q="+latitude+","+longitude+".";
 
-        //String aaa = "long: "+ longitude + " lat : "+latitude;
+        String message = "I’m " + name + " " + ImNo +". Please Help Me. I’m in http://maps.google.com/?q="+latitude+","+longitude+".";
+
+
         try {
             SmsManager smsManager= SmsManager.getDefault();
+            ArrayList<String> parts = smsManager.divideMessage(message);
 
             while(stop ==false){
                 Thread thread = new Thread(new Runnable()
@@ -61,7 +63,8 @@ public class SOSApp extends AppCompatActivity {
                             currentMinute = calendar.get(Calendar.MINUTE);
                             if (currentMinute != lastMinute){
                                 lastMinute = currentMinute;
-                                smsManager.sendTextMessage(contactNo,null,message,null,null);
+                                //smsManager.sendTextMessage(contactNo,null,message,null,null);
+                                smsManager.sendMultipartTextMessage(contactNo,null,parts,null,null);
                             }
                         }
                     }
